@@ -22,7 +22,7 @@
 	centos              latest              75835a67d134        2 weeks ago         200MB
 
 #) Run bule container
-	$docker run -it -d "sulekhaaurora/k8s:bluenginx"
+	$docker run -p 8080:80 -it -d "sulekhaaurora/k8s:bluenginx"
 	
 	Verify:
 	$docker ps
