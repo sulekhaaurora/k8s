@@ -1,0 +1,5 @@
+FROM sulekhaaurora/k8s:nginx
+MAINTAINER Kalyan Karumuri
+COPY red.html /usr/share/nginx/html/
+CMD ["nginx", "-g", "daemon off;"]
+EXPOSE 9090:80

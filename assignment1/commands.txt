@@ -1,0 +1,54 @@
+#) Cleanup old images/contaners
+	$docker system prune -a
+	$docker rmi centos
+
+#) Build Image 
+	$docker build -t "sulekhaaurora/k8s:nginx" .
+
+	$ docker images
+	REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+	sulekhaaurora/k8s      nginx               1b78ed8ff391        10 seconds ago      415MB
+	centos              latest              75835a67d134        2 weeks ago         200MB
+
+#) Expse port:  -p hostPort:containerPort
+
+#) Create image with blue.html using base nginx image
+	$docker build -t "sulekhaaurora/k8s:bluenginx" -f BlueDockerfile .
+
+	$ docker images
+	REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+	sulekhaaurora/k8s      bluenginx           83eaa2a05266        10 seconds ago      415MB
+	sulekhaaurora/k8s      nginx               1b78ed8ff391        18 minutes ago      415MB
+	centos              latest              75835a67d134        2 weeks ago         200MB
+
+#) Run bule container
+	$docker run -it -d "sulekhaaurora/k8s:bluenginx"
+	
+	Verify:
+	$docker ps
+	$docker exec -it <container id> bash
+	
+	[root@1d9d35483922 /]# nginx -t
+	nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+	nginx: configuration file /etc/nginx/nginx.conf test is successful
+
+	[root@1d9d35483922 /]# curl http://localhost/blue.html
+	<body bgcolor=blue>Bule Page </body>
+	
+
+#) Do same steps for red.html website 
+
+#) Push base image to docker hub
+	$docker login -u=sulekhaaurora -p k8sclass
+	
+	$ docker push  "sulekhaaurora/k8s:nginx"
+	The push refers to repository [docker.io/sulekhaaurora/k8s]
+	e9b6d153893e: Pushed
+	f972d139738d: Mounted from library/centos
+	nginx: digest: sha256:1ec1d8d1895de771e573e19bd5ad37f38d9086fc3d74e8a78f8dc77db869e35d size: 741
+	
+   Push red and blue website images too.. (just to practice)
+
+#) curl from host:
+	c:\Kalyan\Reading\Kubernetes\Training\k8s\assignment1>curl http://localhost:8080/red.html
+	curl: (7) Failed to connect to localhost port 8080: Connection refused
