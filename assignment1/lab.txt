@@ -1,0 +1,10 @@
+Assignment 1:
+
+1. Create a github account and create a repo for assignment1
+2. Create a docker hub account
+3. Create a docker Base image of nginx
+4. Use the base image and create an new image to run a website
+5. Push the image to your docker hub account
+6. Use the same base image and create another image to run another website
+7. Push the image to your docker hub account with a different tag
+8. Run an ubuntu container and curl to the above websites
